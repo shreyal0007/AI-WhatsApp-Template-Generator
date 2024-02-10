@@ -1,0 +1,52 @@
+.parentdiv{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
+    margin-top: 5%;
+    border-radius: 8px;
+    background-color: #202d32;
+    width: 23%;
+}
+.buttondiv{
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
+    margin-top: 5%;
+    /* box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); */
+}
+
+.templatebutton{
+    margin: 10px;
+    padding: 10px;
+    height: 2rem;
+    width: 100%;
+    color: rgb(59, 121, 228);
+    font-size: 17px;
+    background-color: #202d32;
+    font-weight: bold;
+    cursor: pointer;
+    border-top: 1px solid rgb(235, 237, 240);
+}
+.templateimg{
+    margin-top: 10px;
+}
+.headertext{
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+.messagetext{
+    color: white;
+    font-size: 15px;
+    margin-top: 10px;
+}
+.footertext{
+    color: white;
+    font-size: 10px;
+    margin-top: 10px;
+}
