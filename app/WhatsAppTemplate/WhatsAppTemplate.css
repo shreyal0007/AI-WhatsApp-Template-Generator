@@ -6,7 +6,10 @@
     margin-top: 5%;
     border-radius: 8px;
     background-color: #202d32;
-    width: 23%;
+    width: 32%;
+}
+.template{
+    padding: 1rem;
 }
 .buttondiv{
     display: flex;
@@ -32,11 +35,12 @@
     border-top: 1px solid rgb(235, 237, 240);
 }
 .templateimg{
-    margin-top: 10px;
+    border-radius: 8px;
+    width: 100%;
 }
 .headertext{
     color: white;
-    font-size: 15px;
+    font-size: 20px;
     font-weight: bold;
     margin-top: 10px;
 }
@@ -46,7 +50,8 @@
     margin-top: 10px;
 }
 .footertext{
-    color: white;
-    font-size: 10px;
+    color: rgb(153 148 148);
+    font-size: 20px;
     margin-top: 10px;
+    font-weight: 200;
 }

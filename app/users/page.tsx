@@ -8,6 +8,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import "./newpage.css";
 import Page from "../WhatsAppTemplate/page";
+import { set } from "react-hook-form";
 
 interface FormValues {
   companyName: string;
@@ -31,6 +32,7 @@ const Form: React.FC = () => {
   const [footer, setFooter] = useState<{
     footerobj: { iscontain: boolean; value: string };
   }>({ footerobj: { iscontain: false, value: "" } });
+  const[footervalue, setFooterValue] = useState<string>("");
   const [callbutton, setCallButton] = useState<{
     callbuttonobj: { iscontain: boolean; value: string };
   }>({ callbuttonobj: { iscontain: false, value: "" } });
@@ -65,7 +67,7 @@ const Form: React.FC = () => {
     try {
       setLoading(true);
       const { companyName, bio, message, header } = formValues;
-      const messageText = `Company Name: ${companyName}\n\nBio: ${bio}\n\nRequirements: ${message}\n Header:${header} \ngenerate a whatsapp template`;
+      const messageText = `Company Name: ${companyName}\n\nBio: ${bio}\n\nRequirements: ${message} \ngenerate a whatsapp template in 1 paragraph describing the needs and the tone of the message should be ${selectedOption} `;
       sendMessage(messageText);
     } catch (error) {
       setLoading(false);
@@ -111,37 +113,108 @@ const Form: React.FC = () => {
       });
   };
 
- 
+const changeimg = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const { checked } = e.target;
+  setImage((prevState) => ({
+    ...prevState,
+    img: {
+      ...prevState.img,
+      iscontain: checked,
+      value: checked ? prevState.img.value : "", // Clear the value if checkbox is unchecked
+    },
+  }));
+};
 
-  const changeimg = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log("Image checkbox clicked");
-    const { checked, value } = e.target;
+const handleimagechange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const file = e.target.files && e.target.files[0]; 
+  if (file) {
+    const imageUrl = URL.createObjectURL(file); 
     setImage((prevState) => ({
       ...prevState,
       img: {
         ...prevState.img,
-        iscontain: checked,
-        value: checked ? value : e.target.value,
+        value: imageUrl, // Store the image URL in the value property
       },
     }));
-    console.log(image.img.iscontain);
-    console.log(image.img.value);
-  };
-
-  const changefooter = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log("Footer checkbox clicked");
-    const { checked, value } = e.target;
-    setFooter((prevState) => ({
+  } else {
+    setImage((prevState) => ({
       ...prevState,
-      footerobj: {
-        ...prevState.footerobj,
-        iscontain: checked,
-        value: checked ? value : e.target.value,
+      img: {
+        ...prevState.img,
+        value: "", // Reset value if no file selected
       },
     }));
-    console.log(footer.footerobj.iscontain);
-    console.log(footer.footerobj.value);
-  };
+  }
+  console.log(image.img.value);
+  console.log(image.img.iscontain);
+};
+
+
+
+ const changefooter = (
+   e: React.ChangeEvent<HTMLInputElement>
+ ) => {
+   const { checked } = e.target;
+   setFooter((prevState) => ({
+     ...prevState,
+     footerobj: {
+       ...prevState.footerobj,
+       iscontain: checked,
+       value: checked ? prevState.footerobj.value : "",
+     },
+   }));
+   
+ };
+   const handleChangeFooterInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+     const { value } = e.target;
+     setFooter((prevState) => ({
+       ...prevState,
+       footerobj: {
+         ...prevState.footerobj,
+         value: value,
+       },
+     }));
+     console.log(footer.footerobj.value);
+     console.log(footer.footerobj.iscontain);
+   };
+
+  const handlewhatsappbuttoninput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    setWhatsappButton((prevState) => ({
+      ...prevState,
+      whatsappbuttonobj: {
+        ...prevState.whatsappbuttonobj,
+        value: value,
+      },
+    }));
+    console.log(whatsappbutton.whatsappbuttonobj.value);
+    console.log(whatsappbutton.whatsappbuttonobj.iscontain);
+  }
+
+  const handlecallbuttoninput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    setCallButton((prevState) => ({
+      ...prevState,
+      callbuttonobj: {
+        ...prevState.callbuttonobj,
+        value: value,
+      },
+    }));
+    console.log(callbutton.callbuttonobj.value);
+    console.log(callbutton.callbuttonobj.iscontain);
+  }
+  const handlelinkbuttoninput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    setLinkButton((prevState) => ({
+      ...prevState,
+      linkbuttonobj: {
+        ...prevState.linkbuttonobj,
+        value: value,
+      },
+    }));
+    console.log(linkbutton.linkbuttonobj.value);
+    console.log(linkbutton.linkbuttonobj.iscontain);
+  }
 
   const changecallbutton = (e: React.ChangeEvent<HTMLInputElement>) => {
     console.log("Call Button checkbox clicked");
@@ -169,6 +242,7 @@ const Form: React.FC = () => {
     }));
     console.log(whatsappbutton.whatsappbuttonobj.value);
   };
+  
 
   const changelinkbutton = (e: React.ChangeEvent<HTMLInputElement>) => {
     console.log("Link Button checkbox clicked");
@@ -243,27 +317,31 @@ const Form: React.FC = () => {
               type="checkbox"
               name="img"
               id="img"
-              value={image.img.value}
               checked={image.img.iscontain}
               onChange={changeimg}
             />
             Add image
           </label>
-          {image.img.iscontain ? <Input type="file" /> : null}
+          {image.img.iscontain ? (
+            <Input type="file" onChange={handleimagechange} />
+          ) : null}
         </div>
         <div>
           <label>
             <input
               type="checkbox"
-              // name="footer"
-              // id="footer"
-              // value=""
               checked={footer.footerobj.iscontain}
               onChange={changefooter}
             />
             Add footer
           </label>
-          {footer.footerobj.iscontain ? <Input type="text" /> : null}
+          {footer.footerobj.iscontain ? (
+            <Input
+              type="text"
+              value={footer.footerobj.value}
+              onChange={handleChangeFooterInput}
+            />
+          ) : null}
         </div>
         <div>
           <label>
@@ -278,7 +356,11 @@ const Form: React.FC = () => {
             Add whatsappbutton
           </label>
           {whatsappbutton.whatsappbuttonobj.iscontain ? (
-            <Input type="link"></Input>
+            <Input
+              type="link"
+              value={whatsappbutton.whatsappbuttonobj.value}
+              onChange={handlewhatsappbuttoninput}
+            ></Input>
           ) : null}
         </div>
         <div>
@@ -293,18 +375,31 @@ const Form: React.FC = () => {
             />
             Add call button
           </label>
-          {callbutton.callbuttonobj.iscontain ? <Input type="tel" /> : null}
+          {callbutton.callbuttonobj.iscontain ? (
+            <Input
+              type="tel"
+              value={callbutton.callbuttonobj.value}
+              onChange={handlecallbuttoninput}
+            />
+          ) : null}
         </div>
         <div>
           <label>
             <input
               type="checkbox"
               checked={linkbutton.linkbuttonobj.iscontain}
+              value={linkbutton.linkbuttonobj.value}
               onChange={changelinkbutton}
             />
             Add linkbutton
           </label>
-          {linkbutton.linkbuttonobj.iscontain ? <Input type="link" /> : null}
+          {linkbutton.linkbuttonobj.iscontain ? (
+            <Input
+              type="link"
+              value={linkbutton.linkbuttonobj.value}
+              onChange={handlelinkbuttoninput}
+            />
+          ) : null}
         </div>
         <div className="grid w-full max-w-sm items-center gap-1.5">
           <Label htmlFor="tones">Tone</Label>
@@ -334,19 +429,25 @@ const Form: React.FC = () => {
           Submit
         </button>
       </form>
-        {loading && <div>Loading...</div>}
-        {/* {template && 
-        <div className='templatediv'>
-        <div className='templateheader'>
-          <h2 className="heading">Generated Template</h2>
-          <button onClick={handleCopy} className='copybutton'>Copy</button>
-        </div>
-        {template}</div>} */}
-        <Page/>
-              </div>
+      {loading && <div>Loading...</div>}
+      <Page
+        header={formValues.header}
+        message={template}
+        footer={footer.footerobj.value ? footer.footerobj.value : ""}
+        whatsappbutton={
+          whatsappbutton.whatsappbuttonobj.value
+            ? whatsappbutton.whatsappbuttonobj.value
+            : ""
+        }
+        callbutton={
+          callbutton.callbuttonobj.value ? callbutton.callbuttonobj.value : ""
+        }
+        linkbutton={
+          linkbutton.linkbuttonobj.value ? linkbutton.linkbuttonobj.value : ""
+        }
+      />
+    </div>
   );
 };
-
 export default Form;
 
-//add tones
