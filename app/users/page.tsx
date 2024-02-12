@@ -1,14 +1,11 @@
 "use client";
-import React, { use, useEffect, useState } from "react";
+import React, {  useState } from "react";
 import axios from "axios";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import "./newpage.css";
 import Page from "../WhatsAppTemplate/page";
-import { set } from "react-hook-form";
 
 interface FormValues {
   companyName: string;
@@ -129,6 +126,7 @@ const handleimagechange = (e: React.ChangeEvent<HTMLInputElement>) => {
   const file = e.target.files && e.target.files[0]; 
   if (file) {
     const imageUrl = URL.createObjectURL(file); 
+    console.log(imageUrl)
     setImage((prevState) => ({
       ...prevState,
       img: {
@@ -445,6 +443,7 @@ const handleimagechange = (e: React.ChangeEvent<HTMLInputElement>) => {
         linkbutton={
           linkbutton.linkbuttonobj.value ? linkbutton.linkbuttonobj.value : ""
         }
+        img={image.img.value}
       />
     </div>
   );

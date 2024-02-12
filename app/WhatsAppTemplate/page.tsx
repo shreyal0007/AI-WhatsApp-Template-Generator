@@ -1,3 +1,4 @@
+"use client"
 import React from "react";
 import img from "../../components/ui/prodimg.jpg";
 import "./WhatsAppTemplate.css";
@@ -9,6 +10,7 @@ interface Props {
   whatsappbutton: string;
   callbutton: string;
   linkbutton: string;
+  img: any;
 }
 
 const Page: React.FC<Props> = ({
@@ -18,6 +20,7 @@ const Page: React.FC<Props> = ({
   whatsappbutton,
   callbutton,
   linkbutton,
+  img
 }) => {
   const handleWhatsAppDirect = () => {
     
@@ -36,7 +39,7 @@ const Page: React.FC<Props> = ({
   return (
     <div className="parentdiv">
       <div className="template">
-        <img src={img.src} alt="Product" className="templateimg" />
+        <img src={img} alt="Product" className="templateimg" />
         <p className="headertext">{header}</p>
         <p className="messagetext">{message}</p>
         <p className="footertext">{footer}</p>
