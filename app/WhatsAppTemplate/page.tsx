@@ -4,46 +4,48 @@ import img from "../../components/ui/prodimg.jpg";
 import "./WhatsAppTemplate.css";
 
 interface Props {
+  templatename: string;
   header: string;
-  message: string;
+  body: string;
   footer: string;
-  whatsappbutton: string;
-  callbutton: string;
-  linkbutton: string;
-  img: any;
+  buttonValues: { [key: string]:  string };
 }
 
 const Page: React.FC<Props> = ({
+  templatename,
   header,
-  message,
+  body,
   footer,
-  whatsappbutton,
-  callbutton,
-  linkbutton,
-  img
+  buttonValues,
 }) => {
-  const handleWhatsAppDirect = () => {
+  // const handleWhatsAppDirect = () => {
     
-    window.open(whatsappbutton, "_blank"); 
-  };
+  //   window.open(whatsappbutton, "_blank"); 
+  // };
 
-  const handleCallDirect = () => {
-    window.open(`tel:${callbutton}`, "_self"); 
-  };
+  // const handleCallDirect = () => {
+  //   window.open(`tel:${callbutton}`, "_self"); 
+  // };
 
-  const handleLinkDirect = () => {
+  // const handleLinkDirect = () => {
     
-    window.open(linkbutton, "_blank"); 
-  };
+  //   window.open(linkbutton, "_blank"); 
+  // };
 
   return (
     <div className="parentdiv">
       <div className="template">
-        <img src={img} alt="Product" className="templateimg" />
-        <p className="headertext">{header}</p>
-        <p className="messagetext">{message}</p>
+        <p className="templatename">{templatename}</p>
+        <p className="messagetext">{header}</p>
+        <p className="body">{body}</p>
         <p className="footertext">{footer}</p>
-        <div className="buttondiv">
+        {buttonValues &&
+          Object.entries(buttonValues).map(([key, value]) => (
+            <button key={key} className="templatebutton">
+              {value}
+            </button>
+          ))}
+        {/* <div className="buttondiv">
           {whatsappbutton && (
             <button className="templatebutton" onClick={handleWhatsAppDirect}>
               WhatsApp message
@@ -59,7 +61,7 @@ const Page: React.FC<Props> = ({
               Link
             </button>
           )}
-        </div>
+        </div> */}
       </div>
     </div>
   );

@@ -9,7 +9,7 @@
 }
 .formdiv{
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     justify-content: center;
 }
@@ -44,6 +44,9 @@
     font-size: 1rem;
     font-weight: 300;
     cursor: pointer;
+}
+.mainform{
+    margin: 3rem;
 }
 .submitbutton:hover{
     background-color: #071f38;
