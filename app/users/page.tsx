@@ -177,9 +177,7 @@ const Form: React.FC = () => {
         const footer= jsonContent.footer;
         const header= jsonContent.header.content;
         const templateName= jsonContent.templateName;
-        
-          setButtontxt(jsonContent.buttons);
-        
+        setButtontxt(jsonContent.buttons);
         setBody(body);
         setFooter2(footer);
         setHeader(header);
@@ -188,7 +186,7 @@ const Form: React.FC = () => {
         console.log(footer);
         console.log(header);
         console.log(templateName);
-        console.log();
+        console.log(buttontxt);
         setLoading(false);
       })
       .catch((error) => {
@@ -196,17 +194,17 @@ const Form: React.FC = () => {
         setLoading(false);
       });
   };
-  const handleCopy = () => {
-    navigator.clipboard
-      .writeText(content)
-      .then(() => {
-        console.log("Content copied to clipboard");
-        window.alert("Content copied to clipboard");
-      })
-      .catch((error) => {
-        console.error("Failed to copy content to clipboard:", error);
-      });
-  };
+const handleCopy = () => {
+  navigator.clipboard
+    .writeText(content)
+    .then(() => {
+      console.log("Content copied to clipboard");
+      window.alert("Content copied to clipboard");
+    })
+    .catch((error) => {
+      console.error("Failed to copy content to clipboard:", error);
+    });
+};
 
 const changeimg = (e: React.ChangeEvent<HTMLInputElement>) => {
   const { checked } = e.target;
@@ -532,7 +530,7 @@ const handleimagechange = (e: React.ChangeEvent<HTMLInputElement>) => {
         header={header}
         body={body}
         footer={footer2}
-        buttontext={buttontxt}
+        buttonValues={{...buttontxt}}
         // whatsappbutton={
         //   whatsappbutton.whatsappbuttonobj.value
         //     ? whatsappbutton.whatsappbuttonobj.value

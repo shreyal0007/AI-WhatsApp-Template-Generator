@@ -31,9 +31,26 @@ const Page: React.FC<Props> = ({
     
   //   window.open(linkbutton, "_blank"); 
   // };
+  const handleCopy = () => {
+    const contentToCopy = `${templatename}\n${header}\n${body}\n${footer}\n${Object.values(
+      buttonValues
+    ).join("\n")}`;
+    navigator.clipboard
+      .writeText(contentToCopy)
+      .then(() => {
+        console.log("Content copied to clipboard");
+        window.alert("Content copied to clipboard");
+      })
+      .catch((error) => {
+        console.error("Failed to copy content to clipboard:", error);
+      });
+  };
 
   return (
     <div className="parentdiv">
+      <button className="copybutton" onClick={handleCopy}>
+        Copy Template
+      </button>
       <div className="template">
         <p className="templatename">{templatename}</p>
         <p className="messagetext">{header}</p>
