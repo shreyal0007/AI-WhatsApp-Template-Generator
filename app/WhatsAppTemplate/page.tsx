@@ -18,19 +18,6 @@ const Page: React.FC<Props> = ({
   footer,
   buttonValues,
 }) => {
-  // const handleWhatsAppDirect = () => {
-    
-  //   window.open(whatsappbutton, "_blank"); 
-  // };
-
-  // const handleCallDirect = () => {
-  //   window.open(`tel:${callbutton}`, "_self"); 
-  // };
-
-  // const handleLinkDirect = () => {
-    
-  //   window.open(linkbutton, "_blank"); 
-  // };
   const handleCopy = () => {
     const contentToCopy = `${templatename}\n${header}\n${body}\n${footer}\n${Object.values(
       buttonValues
@@ -62,23 +49,7 @@ const Page: React.FC<Props> = ({
               {value}
             </button>
           ))}
-        {/* <div className="buttondiv">
-          {whatsappbutton && (
-            <button className="templatebutton" onClick={handleWhatsAppDirect}>
-              WhatsApp message
-            </button>
-          )}
-          {callbutton && (
-            <button className="templatebutton" onClick={handleCallDirect}>
-              Call
-            </button>
-          )}
-          {linkbutton && (
-            <button className="templatebutton" onClick={handleLinkDirect}>
-              Link
-            </button>
-          )}
-        </div> */}
+        
       </div>
     </div>
   );

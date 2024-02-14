@@ -1,5 +1,8 @@
 "use client";
 import React, {  useState,useEffect } from "react";
+import FormGroup from "@mui/material/FormGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Switch from "@mui/material/Switch";
 import axios from "axios";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -30,7 +33,11 @@ const Form: React.FC = () => {
   const [footer2, setFooter2] = useState<string>("");
   const [template, setTemplate] = useState<string>("");
   const[buttontxt, setButtontxt] = useState<ButtonState>({});
+  const[emojitoggle, setEmojiToggle] = useState<boolean>(false);
+  const[state,setState]=useState<string>("");
+  const [selectedTone, setSelectedTone] = useState<string>(""); // State to store the selected tone
 
+ 
 
   const [loading, setLoading] = useState<boolean>(false);
   const [image, setImage] = useState<{
@@ -67,6 +74,10 @@ const Form: React.FC = () => {
       [name]: value,
     }));
   };
+   const handleToneButtonClick = (tone:string) => {
+     setSelectedTone(tone);
+     console.log(selectedTone);
+   };
 
   const convertStringToJson = (str: string) => {
     try {
@@ -145,7 +156,8 @@ const Form: React.FC = () => {
       Give response in JSON Format.
       Generate button names in same format . Do not change the format of generation of button names.
       The keys of JSON should not have any spaces or special characters.
-      The keys shoulld be in the format of camelCase.`;
+      The keys shoulld be in the format of camelCase.
+      Also ${state}`;
       sendMessage(messageText);
     } catch (error) {
       setLoading(false);
@@ -194,6 +206,16 @@ const Form: React.FC = () => {
         setLoading(false);
       });
   };
+   const handleemojitoggle = () => {
+     setEmojiToggle(!emojitoggle);
+     console.log(emojitoggle);
+     if (emojitoggle == true) {
+       setState("Do not add emojis to the template");
+     } else {
+       setState("Add emojis to the template");
+     }
+     console.log(state);
+   };
 const handleCopy = () => {
   navigator.clipboard
     .writeText(content)
@@ -358,6 +380,7 @@ const handleimagechange = (e: React.ChangeEvent<HTMLInputElement>) => {
 
   return (
     <div className="formdiv">
+      <p className="formheader">AI WhatsApp Template Generator</p>
       <form onSubmit={handleSubmit} className="mainform">
         <div className="grid w-full max-w-sm items-center gap-1.5">
           <Label htmlFor="companyName">Company Name</Label>
@@ -394,17 +417,57 @@ const handleimagechange = (e: React.ChangeEvent<HTMLInputElement>) => {
           />
         </div>
         <div className="grid w-full max-w-sm items-center gap-1.5">
-          <Label htmlFor="tonee">Tone</Label>
-          <Input
-            type="text"
-            id="tonee"
-            className="label"
-            name="tonee"
-            value={formValues.tonee}
-            onChange={handleChange}
-            required
-          />
+          <Label htmlFor="tonee">Choose a Tone ..</Label>
+          <div className="tonesbuttondiv">
+            <button
+              className={`tonesbutton ${
+                selectedTone === "Formal" ? "active" : ""
+              }`}
+              onClick={() => handleToneButtonClick("Formal")}
+            >
+              Formal
+            </button>
+            <button
+              className={`tonesbutton ${
+                selectedTone === "Informal" ? "active" : ""
+              }`}
+              onClick={() => handleToneButtonClick("Informal")}
+            >
+              Informal
+            </button>
+            <button
+              className={`tonesbutton ${
+                selectedTone === "Humorous" ? "active" : ""
+              }`}
+              onClick={() => handleToneButtonClick("Humorous")}
+            >
+              Humorous
+            </button>
+            <button
+              className={`tonesbutton ${
+                selectedTone === "Quirky" ? "active" : ""
+              }`}
+              onClick={() => handleToneButtonClick("Quirky")}
+            >
+              Quirky
+            </button>
+            <button
+              className={`tonesbutton ${
+                selectedTone === "Creative" ? "active" : ""
+              }`}
+              onClick={() => handleToneButtonClick("Creative")}
+            >
+              Creative
+            </button>
+          </div>
         </div>
+        <FormGroup>
+          <FormControlLabel
+            control={<Switch defaultChecked />}
+            onChange={handleemojitoggle}
+            label="Emojis &#128526;"
+          />
+        </FormGroup>
 
         {/* <div>
           <label>
@@ -521,7 +584,7 @@ const handleimagechange = (e: React.ChangeEvent<HTMLInputElement>) => {
           </div>
         </div> */}
         <button type="submit" className="submitbutton">
-          Submit
+          Generate Your Template Now!!
         </button>
       </form>
       {loading && <div>Loading...</div>}
@@ -530,7 +593,7 @@ const handleimagechange = (e: React.ChangeEvent<HTMLInputElement>) => {
         header={header}
         body={body}
         footer={footer2}
-        buttonValues={{...buttontxt}}
+        buttonValues={{ ...buttontxt }}
         // whatsappbutton={
         //   whatsappbutton.whatsappbuttonobj.value
         //     ? whatsappbutton.whatsappbuttonobj.value
