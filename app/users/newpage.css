@@ -105,11 +105,8 @@
     font-weight: 400;
     cursor: pointer;
 }
-.tonesbutton:hover{
-    background-color: #007bff;
-    color: white;
-}
-.tonesbutton:active{
+
+.active{
     background-color: #007bff;
     color: white;
 }

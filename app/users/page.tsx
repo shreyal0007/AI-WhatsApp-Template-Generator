@@ -35,7 +35,7 @@ const Form: React.FC = () => {
   const[buttontxt, setButtontxt] = useState<ButtonState>({});
   const[emojitoggle, setEmojiToggle] = useState<boolean>(false);
   const[state,setState]=useState<string>("");
-  const [selectedTone, setSelectedTone] = useState<string>(""); // State to store the selected tone
+  const [selectedTone, setSelectedTone] = useState<string>("Formal"); // State to store the selected tone
 
  
 
@@ -94,7 +94,7 @@ const Form: React.FC = () => {
     try {
       setLoading(true);
       const { companyName, bio, message, tonee } = formValues;
-      const messageText = `Imagine you are a senior content writer. You are writing a WhatsApp template for ${companyName} they ${bio}.** Write a short WhatsApp template about **${message}** .** The tone must be **${tonee}**.
+      const messageText = `Imagine you are a senior content writer. You are writing a WhatsApp template for ${companyName} they ${bio}.** Write a short WhatsApp template about **${message}** .** The tone must be **${selectedTone}**.
    
     **Fields to fill in WhatsApp template**
    
